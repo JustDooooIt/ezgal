@@ -37,7 +37,14 @@
 你可以直接将源码克隆到你的项目中, 并将**ezgal**文件夹导入到godot中接着开发:
 
 ```bash
-git clone https://gitee.com/cryingn/ezgal
+git clone https://atomgit.com/godothub/ezgal
+cd ezgal/ezgal
+```
+
+或
+
+```bash
+git clone https://gitee.com/godothub/ezgal
 cd ezgal/ezgal
 ```
 
