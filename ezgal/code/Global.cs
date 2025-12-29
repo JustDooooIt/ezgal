@@ -68,13 +68,14 @@ public partial class Global : Node
 
 	public override void _Ready()
 	{
+		// window size是否会改变
 		window_width = GetWindow().Size.X;
 		window_height = GetWindow().Size.Y;
-		datas = run_file("start.txt");
+		datas = RunFile("start.txt");
 	}
 
 	// 实在排查不明白时方便打印结构体
-	public static void print(Flow new_data)
+	public static void Print(Flow new_data)
 	{
 		GD.Print($"Round ptr:{intptr}");
 		GD.Print($"type		:{new_data.type}");
@@ -98,12 +99,12 @@ public partial class Global : Node
 	}
 
 	// 读取data并转义为json格式.
-	public static List<Flow> run_file(string path)
+	public static List<Flow> RunFile(string path)
 	{
 		if (FlowData.flowdata.Count == 0)
 		{
 			try {
-				return read_file(path);
+				return ReadFile(path);
 			}
 			catch
 			{
@@ -114,7 +115,7 @@ public partial class Global : Node
 	}
 
 	// 读取文本文档转义为json格式.
-	static List<Flow> read_file(string path)
+	static List<Flow> ReadFile(string path)
 	{
 		read_file_name = path;
 		flow_line = new Flow{};
@@ -129,8 +130,8 @@ public partial class Global : Node
 					flow_line = new Flow{};
 				}
 				// 处理空行与中括号部分
-				line = analyze_symbols(line, reader);
-				if (end_line())
+				line = AnalyzeSymbols(line, reader);
+				if (EndLine())
 				{
 					return new_datas;
 				}
@@ -148,13 +149,13 @@ public partial class Global : Node
 					}
 					else
 					{
-						flow_line = set_braces_func1(line, new_datas, flow_line);
+						flow_line = SetBracesFunc1(line, new_datas, flow_line);
 					}
 					line = line.Split("}")[1].Trim();
 					if (line == "")
 					{
-						line = analyze_symbols(line, reader);
-						if (end_line())
+						line = AnalyzeSymbols(line, reader);
+						if (EndLine())
 						{
 							return new_datas;
 						}
@@ -181,13 +182,13 @@ public partial class Global : Node
 					new_datas.Add(flow_line);
 				}
 			}
-			end_line();
+			EndLine();
 		}
 		return new_datas;
 	}
 
 	// 包含大括号的字段分析
-	static Flow set_braces_func1(string line, List<Flow> new_datas, Flow flow_line)
+	static Flow SetBracesFunc1(string line, List<Flow> new_datas, Flow flow_line)
 	{
 		// 去掉括号
 		match = Regex.Match(line, @"\{([^}]+)\}");
@@ -222,7 +223,7 @@ public partial class Global : Node
 						new_datas[new_datas.Count - 1] = jump_flow;
 						break;
 					default:
-						flow_line.anima = analyze_anima(sets);
+						flow_line.anima = AnalyzeAnima(sets);
 						break;
 				}
 			}
@@ -231,7 +232,7 @@ public partial class Global : Node
 	}
 
 	// option中处理包含大括号的字段
-	public static Flow set_braces_func2(string line)
+	public static Flow SetBracesFunc2(string line)
 	{
 		// 去掉括号
 		Flow option_flow_line = new Flow{};
@@ -259,7 +260,7 @@ public partial class Global : Node
 						option_flow_line.jump = sets[1];
 						break;
 					default:
-						option_flow_line.anima = analyze_anima(sets);
+						option_flow_line.anima = AnalyzeAnima(sets);
 						break;
 				}
 			}
@@ -271,7 +272,7 @@ public partial class Global : Node
 		return option_flow_line;
 	}
 
-	static bool end_line()
+	static bool EndLine()
 	{
 		bool flag = false;
 		if (line == null)
@@ -288,7 +289,7 @@ public partial class Global : Node
 	}
 
 	// 分析符号部分
-	static string analyze_symbols(string line, StreamReader reader)
+	static string AnalyzeSymbols(string line, StreamReader reader)
 	{
 		while (line != null && 
 			(line.Trim() == "" || line.StartsWith("'''") || line.StartsWith("#") || line.StartsWith("[") || line.StartsWith("@"))
@@ -332,7 +333,7 @@ public partial class Global : Node
 	}
 
 	// 识别立绘部分字段, 生成立绘参数
-	static Anima analyze_anima(string[] sets)
+	static Anima AnalyzeAnima(string[] sets)
 	{
 		string[] animas = sets[1].Split("-");
 		string[] anima_position = animas[1].Split("x");
@@ -349,9 +350,9 @@ public partial class Global : Node
 		return anima;
 	}
 
-	public static void load_dictionary(Dictionary dic_node, Variant file_name)
+	public static void LoadDictionary(Dictionary dic_node, Variant file_name)
 	{
-		dic_node._show();
+		dic_node.Show();
 		dic_node.self = dic_node;
 		if (FlowData.dicdata.Count == 0)
 		{
@@ -360,12 +361,12 @@ public partial class Global : Node
 				using (StreamReader reader = new StreamReader($"./dictionary/{file_name}.txt"))
 				{
 					string textdata = reader.ReadToEnd();
-					dic_node.text.Text = textdata;
+					dic_node.Text.Text = textdata;
 				}
 			}
 			catch
 			{
-				dic_node.text.Text = "无法加载字典内容";
+				dic_node.Text.Text = "无法加载字典内容";
 			}
 		}
 		else
@@ -373,11 +374,11 @@ public partial class Global : Node
 			try
 			{
 				string textdata = FlowData.dicdata.FirstOrDefault(x => x.file == $"{file_name}.txt").data;
-				dic_node.text.Text = textdata;
+				dic_node.Text.Text = textdata;
 			}
 			catch
 			{
-				dic_node.text.Text = "无法加载字典内容";
+				dic_node.Text.Text = "无法加载字典内容";
 			}
 		}
 	}

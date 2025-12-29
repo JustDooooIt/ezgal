@@ -6,31 +6,39 @@
 [ext_resource type="PackedScene" uid="uid://c1iq24b0yl10y" path="res://scene/font.tscn" id="4_j4tt0"]
 [ext_resource type="PackedScene" uid="uid://b76hqjcnewbyk" path="res://scene/options.tscn" id="5_p1ry8"]
 
-[node name="game" type="Control"]
+[node name="Game" type="Control" node_paths=PackedStringArray("Background", "Bottom", "Font", "Options")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -1536.0
-offset_bottom = -864.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_2aseg")
 script = ExtResource("1_riov1")
+Background = NodePath("Background")
+Bottom = NodePath("Bottom")
+Font = NodePath("Font")
+Options = NodePath("Options")
+EndScenePath = "res://scene/end.tscn"
 
-[node name="background" type="Sprite2D" parent="."]
+[node name="Background" type="TextureRect" parent="."]
 z_index = -2
-position = Vector2(768, 432)
-scale = Vector2(1.5, 1.5)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
 
-[node name="bottom" parent="." instance=ExtResource("3_0q3g2")]
+[node name="Bottom" parent="." instance=ExtResource("3_0q3g2")]
 layout_mode = 1
 
-[node name="font" parent="." instance=ExtResource("4_j4tt0")]
+[node name="Font" parent="." instance=ExtResource("4_j4tt0")]
 layout_mode = 0
 
-[node name="options" parent="." instance=ExtResource("5_p1ry8")]
+[node name="Options" parent="." instance=ExtResource("5_p1ry8")]
 layout_mode = 0
 
-[connection signal="StartGame" from="bottom" to="." method="_on_bottom_start_game"]
-[connection signal="StartGame" from="font" to="." method="_on_font_start_game"]
+[connection signal="StartGame" from="Bottom" to="." method="_on_bottom_start_game"]
+[connection signal="StartGame" from="Font" to="." method="_on_font_start_game"]

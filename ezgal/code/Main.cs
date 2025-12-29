@@ -3,31 +3,40 @@ using System;
 
 public partial class Main : Node2D
 {
-	AudioStreamPlayer sounds;
-	Sprite2D start_texture;
+	[Export]
+	public AudioStreamPlayer Sounds { get; set; }
+
+	[Export]
+	public TextureRect StartTexture { get; set; }
+
+	[Export(PropertyHint.FilePath)]
+	public string GameScenePath { get; set; }
+
 	public override void _Ready()
 	{
-		start_texture = GetNode<Sprite2D>("start_texture");
-		sounds = GetNode<AudioStreamPlayer>("sounds");
+		InitStartTexture();
+	}
 
-		Tools.set_texture(start_texture, "start_texture");
+	private void InitStartTexture()
+	{
+		Tools.SetTexture(StartTexture,"start_texture");
 	}
 
 	void _on_box_container_mouse_entered()
 	{
-		sounds.Play();
+		Sounds.Play();
 	}
 
 	void _on_exit_mouse_entered()
 	{
-		sounds.Play();
+		Sounds.Play();
 	}
 
 	// 开始游戏
 	void _on_game_start_pressed()
 	{
 		Global.intptr = 0;
-		GetTree().ChangeSceneToFile("res://scene/game.tscn");
+		GetTree().ChangeSceneToFile(GameScenePath);
 	}
 
 	// 读取字典

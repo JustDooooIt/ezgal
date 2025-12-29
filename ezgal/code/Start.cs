@@ -1,10 +1,12 @@
 using Godot;
 using System;
 
-public partial class Start : Control
+public partial class Start : Label
 {
 	Tween tween;
-	Node2D control;
+
+	[Export]
+	public ColorRect Menu { get; set; }
 
 	// 点击任意键开始游戏.
 	public override void _Input(InputEvent @event)
@@ -13,25 +15,24 @@ public partial class Start : Control
 		{
 			if (keyEvent.Pressed)
 			{
-				input_key();
+				InputKey();
 			}
 		}
 		else if (@event is InputEventMouseButton mouseButtonEvent)
 		{
 			if (mouseButtonEvent.Pressed)
 			{
-				input_key();
+				InputKey();
 			}
 		}
 	}
 
 	// 开始游戏的动画.
-	void input_key()
+	private void InputKey()
 	{
 		//Hide();
-		control = GetNode<Node2D>("../control");
-		tween = GetTree().CreateTween();
-		tween.TweenProperty(control, "position", new Vector2(0, 0), 0.6f);
+		tween = Menu.CreateTween();
+		tween.TweenProperty(Menu, "position", new Vector2(0, 0), 0.6f);
 		ProcessMode = Node.ProcessModeEnum.Disabled;
 	}
 }

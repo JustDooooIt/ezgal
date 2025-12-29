@@ -3,23 +3,24 @@
 [ext_resource type="Theme" uid="uid://dps3t0y1voqpb" path="res://theme/game.tres" id="1_b5uk8"]
 [ext_resource type="Script" uid="uid://bx6sunkarf4il" path="res://code/Dictionary.cs" id="2_rb4mc"]
 
-[node name="dictionary" type="Control"]
+[node name="Dictionary" type="Control" node_paths=PackedStringArray("Text")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1536.0
 offset_bottom = 864.0
 theme = ExtResource("1_b5uk8")
 script = ExtResource("2_rb4mc")
+Text = NodePath("Text")
 metadata/_edit_horizontal_guides_ = [750.0]
 metadata/_edit_vertical_guides_ = [1486.0, 349.0]
 
-[node name="dialog" type="ColorRect" parent="."]
+[node name="Dialog" type="ColorRect" parent="."]
 layout_mode = 0
 offset_right = 1536.0
 offset_bottom = 864.0
 color = Color(0, 0, 0, 0.784314)
 
-[node name="text" type="RichTextLabel" parent="."]
+[node name="Text" type="RichTextLabel" parent="."]
 layout_mode = 0
 offset_left = 349.0
 offset_top = 50.0
@@ -56,7 +57,7 @@ text = "文字信息"
 layout_mode = 2
 text = "bbcode编码"
 
-[connection signal="meta_clicked" from="text" to="." method="_on_text_meta_clicked"]
+[connection signal="meta_clicked" from="Text" to="." method="_on_text_meta_clicked"]
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/Button2" to="." method="_on_button_pressed"]

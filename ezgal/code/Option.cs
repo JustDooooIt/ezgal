@@ -13,11 +13,11 @@ public partial class Option : Button
         game = GetNode<Game>("../../../game");
 	}
 
-    void _on_pressed()
+    private void _on_pressed()
     {
-        game.datas[Global.intptr + 1] = Global.set_braces_func2(set_option);
+        game.Datas[Global.intptr + 1] = Global.SetBracesFunc2(set_option);
         Global.intptr++;
-        options._hide();
-        game.run();
+        options.Hide();
+        game.Run();
     }
 }

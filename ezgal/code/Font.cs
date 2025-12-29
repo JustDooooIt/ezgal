@@ -31,7 +31,7 @@ public partial class Font : Control
 	}
 
 	// 设置对话框文本
-	public void set_text(string text_data, bool add_data)
+	public void SetText(string text_data, bool add_data)
 	{
 		if ( tween.IsRunning() )
 		{
@@ -83,7 +83,7 @@ public partial class Font : Control
 	// 跳转到专业词汇文本事件
 	public void _on_text_meta_clicked(Variant meta)
 	{
-		Global.load_dictionary(dic_node, meta);
+		Global.LoadDictionary(dic_node, meta);
 	}
 
 }

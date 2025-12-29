@@ -7,34 +7,34 @@ public partial class Options : Control
 	PackedScene option_tscn = GD.Load<PackedScene>("res://scene/option.tscn");
 	//static string[] init_options;
 
-    public override void _Ready()
+	public override void _Ready()
 	{
-		_hide();
+		Hide();
 	}
 
-    // 隐藏选项
-	public void _hide()
+	// 隐藏选项
+	public new void Hide()
 	{
 		foreach (Button child in GetChildren())
 		{
 			child.QueueFree();
 		}
-		Hide();
+		base.Hide();
 	}
 
 	// 显示选项
-	public void _show()
+	public new void Show()
 	{
-		Show();
+		base.Show();
 	}
 
-	public void set_options(List<string> options)
+	public void SetOption(List<string> options)
 	{
-		_show();
+		Show();
 		Option button = option_tscn.Instantiate<Option>();
 		int space = 80;
 		int button_height = options.Count * (int)button.Size[1] + (options.Count - 1) * space;
-		int option_y = (Global.window_height-button_height)/2;
+		int option_y = (Global.window_height - button_height) / 2;
 		foreach (string option in options)
 		{
 			Option new_button = option_tscn.Instantiate<Option>();
@@ -45,7 +45,7 @@ public partial class Options : Control
 				new_option = option.Split("}")[1].Trim();
 			}
 			new_button.Text = new_option;
-			new_button.Position = new Vector2((Global.window_width-button.Size[0])/2, option_y);
+			new_button.Position = new Vector2((Global.window_width - button.Size[0]) / 2, option_y);
 			AddChild(new_button);
 			option_y += space + (int)button.Size[1];
 		}

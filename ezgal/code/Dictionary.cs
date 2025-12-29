@@ -3,36 +3,35 @@ using System;
 
 public partial class Dictionary : Control
 {
-
-    public RichTextLabel text;
-    public Dictionary self;
+	[Export]
+	public RichTextLabel Text { get; set; }
+	public Dictionary self;
 
 	public override void _Ready()
 	{
-		text = GetNode<RichTextLabel>("text");
-		_hide();
-	}
-
-	// 隐藏对话框
-	public void _hide()
-	{
-        text.Text = "";
 		Hide();
 	}
 
-	// 显示对话框
-	public void _show()
+	// 隐藏对话框
+	public new void Hide()
 	{
-		Show();
+		Text.Text = "";
+		base.Hide();
 	}
 
-    public void _on_text_meta_clicked(Variant meta)
-    {
-        Global.load_dictionary(self, meta);
-    }
+	// 显示对话框
+	public new void Show()
+	{
+		base.Show();
+	}
 
-    public void _on_button_pressed()
-    {
-        _hide();
-    }
+	public void _on_text_meta_clicked(Variant meta)
+	{
+		Global.LoadDictionary(self, meta);
+	}
+
+	public void _on_button_pressed()
+	{
+		Hide();
+	}
 }

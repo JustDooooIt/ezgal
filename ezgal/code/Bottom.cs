@@ -4,8 +4,11 @@ using System;
 public partial class Bottom : Control
 {
 	Tween tween;
+	[Export]
 	ColorRect dialog;
+	[Export]
 	RichTextLabel text;
+	[Export]
 	Label name;
 	Dictionary dic_node;
 
@@ -14,33 +17,29 @@ public partial class Bottom : Control
 
 	public override void _Ready()
 	{
-		dic_node = GetNode<Dictionary>("dictionary");
-		dialog = GetNode<ColorRect>("dialog");
-		text = GetNode<RichTextLabel>("text");
-		name = GetNode<Label>("name");
-		_hide();
-	}
-
-	// 重写隐藏函数
-	public void _hide()
-	{
-		dialog.Size = new Vector2(Global.window_width, 0);
 		Hide();
 	}
 
+	// 重写隐藏函数
+	public new void Hide()
+	{
+		dialog.Size = new Vector2(Global.window_width, 0);
+		base.Hide();
+	}
+
 	// 重写显示函数
-	public void _show()
+	public new void Show()
 	{
 		if (dialog.Size == new Vector2(Global.window_width, 0))
 		{
 			tween = GetTree().CreateTween();
 			tween.TweenProperty(dialog, "size", new Vector2(Global.window_width, 292), 0.3f);
 		}
-		Show();
+		base.Show();
 	}
 
 	// 添加语言文本
-	public void set_text(string text_data)
+	public void SetText(string text_data)
 	{ 
 		text.Text = $"{text_data} »";
 		text.VisibleRatio = 0.0f;
@@ -49,7 +48,7 @@ public partial class Bottom : Control
 	}
 
 	// 添加角色名
-	public void set_name(string name_data)
+	public new void SetName(string name_data)
 	{
 		name.Text = name_data;
 	}
@@ -96,6 +95,6 @@ public partial class Bottom : Control
 	// 跳转到专业词汇文本事件
 	public void _on_text_meta_clicked(Variant meta)
 	{
-		Global.load_dictionary(dic_node, meta);
+		Global.LoadDictionary(dic_node, meta);
 	}
 }
